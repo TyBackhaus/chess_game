@@ -1,32 +1,29 @@
-import os 
-import sys 
-import pygame
-#user interface 
+
 import pygame as p
 from chess import chessengine
 
 WIDTH = HIGHT =512 
 dimension = 8 # 8x8 board 
-sq_size = HIGHT // dimension
+SQ_SIZE = HIGHT // dimension
 MAX_FPS =15 # for animations
 IMAGES={}
 
 """
 load immages = global dictionary runes once in main
 """
-def Load_Images():
+def LoadImages():
   pieces= ["wp","wR","wN","wB","wQ","wK","bp","bR","bN","bB","bQ","bK",]
   for piece in pieces:
-    IMAGES[piece]= p.transform.scale(p.image.load("images/"+ piece+ ".png"), (sq_size,sq_size))
+    IMAGES[piece]= p.transform.scale(p.image.load("images/"+ piece + ".png"), (SQ_SIZE,SQ_SIZE))
     # can acess images by saying images["wp"]
 # main driver .and handle input and graphics 
 def main():
-  p.int()
+  p.init()
   screen = p.display.set_mode((WIDTH,HIGHT))
   clock = p.time.Clock()
-  screen.fill(p.color("white"))
+  screen.fill(p.Color("white"))
   gs = chessengine.GameState()
-  Load_Images() # do before while lo op 
+  LoadImages() # do before while lo op 
   running = True 
   while running:
     for i in p.event.get():
@@ -35,16 +32,20 @@ def main():
     drawGameState(screen,gs)    
     clock.tick(MAX_FPS)
     p.display.flip()
+#graphics
 def drawGameState(screen,gs):
-  drawbard(screen)# draws squares 
-  drawpeices(screen.gs)# draws peices on top of square 
-def drawborad(screen):
+  drawBoard(screen)# draws squares 
+  drawPeices(screen,gs.board)# draws peices on top of square 
+#draws sqares on bard 
+def drawBoard(screen):
   colors = [p.color("white"), p.color("grey")]
   for r in range(dimension):
     for c in range(dimension):
-      ((r+c)%2)
+      color = colors [((r+c)%2)]
+      p.draw.rect(screen,color,p.React(c*SQ_SIZE,r*SQ_SIZE,SQ_SIZE,SQ_SIZE)) 
 # draw peices using current game state 
-def drawpeices(screen):
-  
-  main()
-  
+def drawPeices(screen,board):
+  pass  
+#if _name_ == "_main_":
+main()
+drawBoard(screen)
